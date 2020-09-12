@@ -88,6 +88,6 @@ module.exports = {
         icon: `static/assets/stackrole.png`,
       },
     },
-    'gatsby-plugin-offline',
+    "gatsby-plugin-offline",
   ],
 }

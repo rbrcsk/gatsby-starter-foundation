@@ -1,4 +1,3 @@
-import { off } from "process"
 import settings from "../settings"
 
 const typeGen = {

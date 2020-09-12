@@ -1,6 +1,6 @@
 import { Link as GatsbyLink } from "gatsby"
 import styled, { css } from "styled-components"
-import { IconWrapper } from "."
+import { IconWrapper } from "./icons"
 
 interface ButtonProps {
   $outline?: boolean
@@ -16,8 +16,6 @@ const ButtonStyles = css<ButtonProps>`
   color: var(--button-color);
   border-radius: 12px;
   text-decoration: none;
-  -webkit-appearance: none;
-  -moz-appearance: none;
   appearance: none;
   border: none;
   font-size: inherit;

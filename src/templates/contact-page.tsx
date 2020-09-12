@@ -4,7 +4,6 @@ import { RiSendPlane2Line } from "react-icons/ri"
 
 import Layout from "../components/layout"
 import SEO from "../components/seo"
-import styled from "styled-components"
 import { Button, IconWrapper, TextAlign } from "../components/atoms"
 import { Form } from "../components/molecules"
 

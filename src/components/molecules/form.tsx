@@ -16,11 +16,9 @@ export const Form = styled.form`
     appearance: none;
     font-size: 18px;
     font-weight: 600;
+    min-height: 200px;
     &:focus {
       border-color: var(--input-focus-border);
     }
-  }
-  textarea {
-    min-height: 200px;
   }
 `

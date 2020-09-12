@@ -1,20 +1,5 @@
-import { Link as GatsbyLink } from "gatsby"
 import GatsbyImage from "gatsby-image"
-import { RiHeart2Line } from "react-icons/ri"
 import styled from "styled-components"
-
-export const IconWrapper = styled.span<{
-  left?: boolean
-  right?: boolean
-  flex?: boolean
-}>`
-  display: ${({ flex }) => (flex ? "inline-flex" : "inline-block")};
-  line-height: inherit;
-  vertical-align: middle;
-  align-items: center;
-  margin-right: ${({ left }) => left && "var(--margin)"};
-  margin-left: ${({ right }) => right && "var(--margin)"};
-`
 
 export const FeaturedImg = (styled(GatsbyImage)<{ article?: boolean }>`
   border-radius: 12px;
@@ -75,10 +60,6 @@ export const SiteFooter = styled.footer`
   }
 `
 
-export const HeartIcon = styled(RiHeart2Line)`
-  color: red;
-`
-
 export const Container = styled.div`
   margin: 0 auto;
   max-width: 1240px;
@@ -92,3 +73,4 @@ export const TextAlign = styled.div<{ align: "left" | "center" | "right" }>`
 export * from "./pagination"
 export * from "./blog"
 export * from "./button"
+export * from "./icons"

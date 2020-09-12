@@ -1,10 +1,7 @@
 import React from "react"
 import { Link } from "gatsby"
 import Img from "gatsby-image"
-import styled, {
-  StyledComponent,
-  ThemedStyledFunction,
-} from "styled-components"
+import styled, { ThemedStyledFunction } from "styled-components"
 
 interface PostCardProps {
   data: GatsbyTypes.HomePageBlogPreviewListQuery["allMarkdownRemark"]["edges"][0]["node"]

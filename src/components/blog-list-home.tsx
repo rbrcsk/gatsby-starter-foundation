@@ -1,5 +1,5 @@
 import React from "react"
-import { Link, graphql, useStaticQuery } from "gatsby"
+import { graphql, useStaticQuery } from "gatsby"
 import { RiArrowDownLine, RiArrowRightSLine } from "react-icons/ri"
 
 import PostCard from "./post-card"

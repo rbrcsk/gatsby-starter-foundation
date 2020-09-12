@@ -1,5 +1,4 @@
 import React from "react"
-import { Link } from "gatsby"
 import { RiArrowLeftSLine, RiCheckboxCircleLine } from "react-icons/ri"
 
 import SEO from "../components/seo"

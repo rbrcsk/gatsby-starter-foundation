@@ -6,7 +6,7 @@ import Navigation from "./navigation"
 
 import Footer from "./footer"
 import { Container, SiteHeader } from "./atoms"
-import styled, { createGlobalStyle, css } from "styled-components"
+import styled, { createGlobalStyle } from "styled-components"
 
 const query = graphql`
   query LayoutQuery {

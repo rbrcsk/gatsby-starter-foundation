@@ -28,7 +28,7 @@ const AboutPageTemplate = ({
   }
 
   return (
-    <Layout className="page">
+    <Layout page narrow>
       <SEO title={frontmatter.title} description={excerpt} />
       <div className="wrapper">
         <h1>{frontmatter.title}</h1>

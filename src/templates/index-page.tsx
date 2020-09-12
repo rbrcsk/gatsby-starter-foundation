@@ -1,11 +1,33 @@
 import React from "react"
-import { graphql, Link, PageProps } from "gatsby"
-import Img from "gatsby-image"
+import { graphql, PageProps } from "gatsby"
 import { RiArrowRightSLine } from "react-icons/ri"
 
 import Layout from "../components/layout"
 import BlogListHome from "../components/blog-list-home"
 import SEO from "../components/seo"
+
+import { Composition } from "atomic-layout"
+import {
+  IndexPageContentWrapper,
+  HomeBannerTitle,
+  HomeBannerTagline,
+  HomeBannerDescription,
+  LinkButton,
+  FeaturedImg,
+  IconWrapper,
+} from "../components/atoms"
+
+const areasMobile = `
+  introduction
+  photo
+  blog
+`
+
+const areasTablet = `
+  introduction photo
+  blog blog
+  / 1fr 1fr
+`
 
 export const pageQuery = graphql`
   query IndexPageTemplate($id: String!) {
@@ -54,32 +76,45 @@ const IndexPageTemplate = ({
   return (
     <Layout>
       <SEO />
-      <div className="home-banner grids col-1 sm-2">
-        <div>
-          <h1 className="title">{frontmatter?.title}</h1>
-          <p className="tagline">{frontmatter?.tagline}</p>
-          <div
-            className="description"
-            dangerouslySetInnerHTML={{ __html: html ?? "" }}
-          />
-          <Link to={frontmatter?.cta?.ctaLink ?? "#"} className="button">
-            {frontmatter?.cta?.ctaText}
-            <span className="icon -right">
-              <RiArrowRightSLine />
-            </span>
-          </Link>
-        </div>
-        <div>
-          {Image && (
-            <Img
-              fluid={Image}
-              alt={frontmatter?.title + " - Featured image"}
-              className="featured-image"
-            />
+      <IndexPageContentWrapper>
+        <Composition
+          template={areasMobile}
+          templateMd={areasTablet}
+          gapCol={30}
+          gapRow={60}
+          alignItems={"center"}
+        >
+          {Areas => (
+            <>
+              <Areas.Introduction alignItems="center">
+                <HomeBannerTitle>{frontmatter?.title}</HomeBannerTitle>
+                <HomeBannerTagline>{frontmatter?.tagline}</HomeBannerTagline>
+                <HomeBannerDescription
+                  dangerouslySetInnerHTML={{ __html: html ?? "" }}
+                />
+                <LinkButton to={frontmatter?.cta?.ctaLink ?? "#"}>
+                  {frontmatter?.cta?.ctaText}
+                  <IconWrapper>
+                    <RiArrowRightSLine />
+                  </IconWrapper>
+                </LinkButton>
+              </Areas.Introduction>
+              <Areas.Photo>
+                {Image && (
+                  <FeaturedImg
+                    fluid={Image}
+                    alt={frontmatter?.title + " - Featured image"}
+                    className="featured-image"
+                  />
+                )}
+              </Areas.Photo>
+              <Areas.Blog>
+                <BlogListHome />
+              </Areas.Blog>
+            </>
           )}
-        </div>
-      </div>
-      <BlogListHome />
+        </Composition>
+      </IndexPageContentWrapper>
     </Layout>
   )
 }

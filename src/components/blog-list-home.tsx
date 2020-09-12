@@ -3,6 +3,9 @@ import { Link, graphql, useStaticQuery } from "gatsby"
 import { RiArrowDownLine, RiArrowRightSLine } from "react-icons/ri"
 
 import PostCard from "./post-card"
+import { Composition } from "atomic-layout"
+import styled from "styled-components"
+import { IconWrapper, LinkButton } from "./atoms"
 
 const query = graphql`
   query HomePageBlogPreviewList {
@@ -34,31 +37,47 @@ const query = graphql`
   }
 `
 
+const BlogPostCardCompositionWrapper = styled.div`
+  padding-bottom: 30px;
+`
+
+const BlogListHomeWrapper = styled.section`
+  padding-bottom: 100px;
+`
+
 const BlogListHome = (): JSX.Element => {
   const data = useStaticQuery<GatsbyTypes.HomePageBlogPreviewListQuery>(query)
 
   return (
-    <section className="home-posts">
+    <BlogListHomeWrapper>
       <h2>
         Latest in <strong>Blog</strong>{" "}
-        <span className="icon -right">
+        <IconWrapper>
           <RiArrowDownLine />
-        </span>
+        </IconWrapper>
       </h2>
-      <div className="grids col-1 sm-2 lg-3">
-        {data.allMarkdownRemark.edges
-          .filter(edge => !!edge.node.frontmatter?.date)
-          .map(edge => (
-            <PostCard key={edge.node.id} data={edge.node} />
-          ))}
-      </div>
-      <Link className="button" to="/blog">
+
+      <BlogPostCardCompositionWrapper>
+        <Composition
+          templateCols="repeat(1, 1fr)"
+          templateColsSm="repeat(2, 1fr)"
+          templateColsLg="repeat(3, 1fr)"
+          gap={30}
+        >
+          {data.allMarkdownRemark.edges
+            .filter(edge => !!edge.node.frontmatter?.date)
+            .map(edge => (
+              <PostCard key={edge.node.id} data={edge.node} />
+            ))}
+        </Composition>
+      </BlogPostCardCompositionWrapper>
+      <LinkButton to="/blog">
         See more
-        <span className="icon -right">
+        <IconWrapper>
           <RiArrowRightSLine />
-        </span>
-      </Link>
-    </section>
+        </IconWrapper>
+      </LinkButton>
+    </BlogListHomeWrapper>
   )
 }
 

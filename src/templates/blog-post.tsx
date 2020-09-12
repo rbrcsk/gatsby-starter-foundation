@@ -1,67 +1,65 @@
 import React from "react"
-import { Link, graphql, PageProps } from "gatsby"
-import Img from "gatsby-image"
-import { RiArrowRightLine, RiArrowLeftLine } from "react-icons/ri"
+import { graphql, PageProps } from "gatsby"
 
 import Layout from "../components/layout"
 import SEO from "../components/seo"
 import { BlogPostPageTemplateContext } from "../types"
+import { ArticleFeatureImg } from "../components/atoms"
+import styled from "styled-components"
+import { PostPagination } from "../components/organisms"
 
-type PaginationProps = Pick<BlogPostPageTemplateContext, "previous" | "next">
-
-const Pagination = (props: PaginationProps) => {
-  let previousFragment: React.ReactNode
-  let nextFragment: React.ReactNode
-
-  if (
-    props.previous?.frontmatter?.template === "blog-post" &&
-    props.previous.frontmatter.slug !== undefined &&
-    props.previous.frontmatter.title !== undefined
-  ) {
-    previousFragment = (
-      <li>
-        <Link to={props.previous.frontmatter.slug} rel="prev">
-          <p>
-            <span className="icon -left">
-              <RiArrowLeftLine />
-            </span>{" "}
-            Previous
-          </p>
-          <span className="page-title">{props.previous.frontmatter.title}</span>
-        </Link>
-      </li>
-    )
+const BlogPost = styled.article`
+  figure {
+    margin: 40px 0;
+    text-align: center;
+    figcaption {
+      font-size: var(--font-size-small);
+      color: var(--text-color-meta);
+      margin-top: 5px;
+    }
+  }
+  blockquote {
+    margin-left: 0;
+    padding: 5px 5px 5px 20px;
+    background-color: #f2f2f2;
+    border-left: 3px solid rgba(0, 0, 0, 0.1);
+  }
+  iframe {
+    border: 2px solid black;
+    box-sizing: border-box;
+  }
+  img {
+    max-width: 100%;
+  }
+`
+const BlogPostContent = styled.div`
+  max-width: 70ch;
+  margin: 0 auto;
+  padding: 20px;
+  line-height: 1.5;
+  font-size: 20px;
+`
+const ArticleHeader = styled.header`
+  section {
+    padding: 35px 0;
+    text-align: center;
+    margin: 0 auto;
   }
 
-  if (
-    props.next?.frontmatter?.template === "blog-post" &&
-    props.next.frontmatter.slug !== undefined &&
-    props.next.frontmatter.title !== undefined
-  ) {
-    nextFragment = (
-      <li>
-        <Link to={props.next.frontmatter.slug} rel="next">
-          <p>
-            Next{" "}
-            <span className="icon -right">
-              <RiArrowRightLine />
-            </span>
-          </p>
-          <span className="page-title">{props.next.frontmatter.title}</span>
-        </Link>
-      </li>
-    )
+  h1 {
+    font-size: 36px;
+    font-size: clamp(18px, calc(1rem + 2vw), 36px);
+    margin: 0 auto 6px;
+    max-width: 768px;
+    line-height: 1.3;
+    font-weight: 600;
   }
 
-  return (
-    <div className="pagination -post">
-      <ul>
-        {previousFragment}
-        {nextFragment}
-      </ul>
-    </div>
-  )
-}
+  time {
+    font-size: 14px;
+    color: rgba(0, 0, 0, 0.6);
+  }
+`
 
 const BlogPostPageTemplate = ({
   data,
@@ -86,7 +84,7 @@ const BlogPostPageTemplate = ({
   }
 
   return (
-    <Layout className="page">
+    <Layout page>
       <SEO
         title={frontmatter.title}
         description={
@@ -95,31 +93,27 @@ const BlogPostPageTemplate = ({
         image={Image}
         article={true}
       />
-      <article className="blog-post">
-        <header className="featured-banner">
-          <section className="article-header">
+      <BlogPost>
+        <ArticleHeader>
+          <section>
             <h1>{frontmatter.title}</h1>
             <time>{frontmatter.date}</time>
           </section>
           {Image && (
-            <Img
+            <ArticleFeatureImg
               fluid={Image}
               alt={frontmatter.title + " - Featured image"}
-              className="featured-image"
               imgStyle={{
                 objectFit: "cover",
                 objectPosition: "50% 50%",
               }}
             />
           )}
-        </header>
+        </ArticleHeader>
 
-        <div
-          className="blog-post-content"
-          dangerouslySetInnerHTML={{ __html: html }}
-        />
-      </article>
-      {(previous || next) && <Pagination {...props} />}
+        <BlogPostContent dangerouslySetInnerHTML={{ __html: html }} />
+      </BlogPost>
+      {(previous || next) && <PostPagination {...props} />}
     </Layout>
   )
 }

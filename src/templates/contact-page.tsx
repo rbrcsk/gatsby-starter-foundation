@@ -34,7 +34,7 @@ const ContactPageTemplate = ({
   }
 
   return (
-    <Layout className="contact-page">
+    <Layout page narrow>
       <SEO
         title={frontmatter.title}
         description={frontmatter.title + " " + site?.siteMetadata?.title}

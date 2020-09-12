@@ -1,8 +1,9 @@
 import React from "react"
 import { Link } from "gatsby"
 import { RiMenu3Line, RiCloseLine } from "react-icons/ri"
+import styled from "styled-components"
 
-const MenuItems = [
+const menuItems = [
   {
     path: "/",
     title: "Home",
@@ -27,6 +28,82 @@ const ListLink = props => (
   </li>
 )
 
+const SiteNavigation = styled.nav`
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  ul li {
+    display: inline-block;
+    margin-left: 20px;
+  }
+  a {
+    color: rgba(255, 255, 255, 0.6);
+    text-decoration: none;
+    &:hover {
+      color: rgba(255, 255, 255, 0.8);
+    }
+  }
+  a[aria-current="page"] {
+    color: rgba(255, 255, 255, 1);
+  }
+
+  @media (max-width: 992px) {
+    ul {
+      display: none;
+      position: absolute;
+      right: 0;
+      top: 100%;
+      z-index: 1;
+      background: #421e2f;
+      width: 100%;
+      max-width: 320px;
+      border-radius: 0 0 0 12px;
+      overflow: hidden;
+    }
+    ul li {
+      display: block;
+      margin-left: 0;
+    }
+    a {
+      display: block;
+      padding: 20px;
+    }
+    a:hover {
+      background-color: #29121d;
+    }
+  }
+`
+
+const MenuIconClose = styled(RiCloseLine)``
+const MenuIcon3Line = styled(RiMenu3Line)``
+
+const MenuTriggerButton = styled.button<{ isActive: boolean }>`
+  display: none;
+  font-size: 24px;
+  background: none;
+  border: none;
+  color: white;
+  padding: 0;
+  cursor: pointer;
+
+  @media (max-width: 992px) {
+    display: flex;
+
+    & + ul {
+      display: ${({ isActive }) => isActive && "block"};
+    }
+
+    ${MenuIconClose} {
+      display: ${({ isActive }) => (isActive ? "flex" : "none")};
+    }
+    ${MenuIcon3Line} {
+      display: ${({ isActive }) => (isActive ? "none" : "flex")};
+    }
+  }
+`
+
 const Navigation = (): JSX.Element => {
   const [showMenu, setShowMenu] = React.useState(false)
 
@@ -35,26 +112,19 @@ const Navigation = (): JSX.Element => {
   }, [setShowMenu])
 
   return (
-    <nav className="site-navigation">
-      <button
-        onClick={handleToggleClick}
-        className={"menu-trigger" + (showMenu ? " is-active" : "")}
-      >
-        <div className="icon-menu-line">
-          <RiMenu3Line />
-        </div>
-        <div className="icon-menu-close">
-          <RiCloseLine />
-        </div>
-      </button>
+    <SiteNavigation>
+      <MenuTriggerButton onClick={handleToggleClick} isActive={showMenu}>
+        <MenuIconClose />
+        <MenuIcon3Line />
+      </MenuTriggerButton>
       <ul>
-        {MenuItems.map((menuItem, index) => (
+        {menuItems.map((menuItem, index) => (
           <ListLink key={index} to={menuItem.path}>
             {menuItem.title}
           </ListLink>
         ))}
       </ul>
-    </nav>
+    </SiteNavigation>
   )
 }
 

@@ -1,11 +1,11 @@
 import React from "react"
-import { Link, graphql, PageProps } from "gatsby"
-import { RiArrowRightLine, RiArrowLeftLine } from "react-icons/ri"
+import { graphql, PageProps } from "gatsby"
 
 import Layout from "../components/layout"
 import PostCard from "../components/post-card"
 import SEO from "../components/seo"
 import { BlogListPageTemplateContext } from "../types"
+import { IndexPagination } from "../components/organisms/IndexPagination"
 
 export const blogListQuery = graphql`
   query BlogListPage($skip: Int!, $limit: Int!) {
@@ -38,53 +38,6 @@ export const blogListQuery = graphql`
   }
 `
 
-interface PaginationProps {
-  isFirst: boolean
-  isLast: boolean
-  numPages: number
-  currentPage: number
-  blogSlug: string
-  prevPage: string
-  nextPage: string
-}
-
-const Pagination = (props: PaginationProps) => (
-  <div className="pagination">
-    <ul>
-      {!props.isFirst && (
-        <li>
-          <Link to={props.prevPage} rel="prev">
-            <span className="icon -left">
-              <RiArrowLeftLine />
-            </span>{" "}
-            Previous
-          </Link>
-        </li>
-      )}
-      {Array.from({ length: props.numPages }, (_, i) => (
-        <li key={`pagination-number${i + 1}`}>
-          <Link
-            to={`${props.blogSlug}${i === 0 ? "" : i + 1}`}
-            className={props.currentPage === i + 1 ? "is-active num" : "num"}
-          >
-            {i + 1}
-          </Link>
-        </li>
-      ))}
-      {!props.isLast && (
-        <li>
-          <Link to={props.nextPage} rel="next">
-            Next{" "}
-            <span className="icon -right">
-              <RiArrowRightLine />
-            </span>
-          </Link>
-        </li>
-      )}
-    </ul>
-  </div>
-)
-
 const BlogListPageTemplate = ({
   data,
   pageContext,
@@ -105,7 +58,7 @@ const BlogListPageTemplate = ({
     .map(edge => <PostCard key={edge.node.id} data={edge.node} />)
 
   return (
-    <Layout className="blog-page">
+    <Layout page>
       <SEO
         title={"Blog — Page " + currentPage + " of " + numPages}
         description={
@@ -114,7 +67,7 @@ const BlogListPageTemplate = ({
       />
       <h1>Blog</h1>
       <div className="grids col-1 sm-2 lg-3">{posts}</div>
-      <Pagination
+      <IndexPagination
         {...{
           isFirst,
           prevPage,

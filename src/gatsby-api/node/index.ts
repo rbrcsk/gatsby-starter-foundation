@@ -1,6 +1,9 @@
 import path from "path"
 import { createFilePath } from "gatsby-source-filesystem"
 import type { GatsbyNode } from "gatsby"
+import type { GatsbyNodeBlogPostListQuery } from "../../types"
+
+// import "../../__generated__/gatsby-types"
 
 export const createPages: GatsbyNode["createPages"] = async ({
   actions,
@@ -12,8 +15,9 @@ export const createPages: GatsbyNode["createPages"] = async ({
   //const blogPost = path.resolve(`./src/templates/blog-post.tsx`)
   const blogList = path.resolve(`./src/templates/blog-list.tsx`)
 
-  const result = await graphql(`
-    {
+  // If you update this, make sure to update src/components/dummy-blog-list.tsx also!
+  const result = await graphql<GatsbyNodeBlogPostListQuery>(`
+    query GatsbyNodeBlogPostList {
       allMarkdownRemark(sort: { order: DESC, fields: [frontmatter___date] }) {
         edges {
           node {
@@ -37,10 +41,14 @@ export const createPages: GatsbyNode["createPages"] = async ({
 
   // Create markdown pages
   // TODO: correctly type this
-  const posts = (result.data as any).allMarkdownRemark.edges
+  const posts = result.data?.allMarkdownRemark?.edges ?? []
   let blogPostsCount = 0
 
   posts.forEach((post, index) => {
+    if (!post.node.frontmatter?.template || !post.node.frontmatter?.slug) {
+      return
+    }
+
     const id = post.node.id
     const previous = index === posts.length - 1 ? null : posts[index + 1].node
     const next = index === 0 ? null : posts[index - 1].node

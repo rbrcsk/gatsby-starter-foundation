@@ -5,9 +5,10 @@ import { RiArrowRightLine, RiArrowLeftLine } from "react-icons/ri"
 import Layout from "../components/layout"
 import PostCard from "../components/post-card"
 import SEO from "../components/seo"
+import { BlogListPageTemplateContext } from "../types"
 
 export const blogListQuery = graphql`
-  query blogListQuery($skip: Int!, $limit: Int!) {
+  query BlogListPage($skip: Int!, $limit: Int!) {
     allMarkdownRemark(
       sort: { order: DESC, fields: [frontmatter___date] }
       filter: { frontmatter: { template: { eq: "blog-post" } } }
@@ -36,7 +37,18 @@ export const blogListQuery = graphql`
     }
   }
 `
-const Pagination = props => (
+
+interface PaginationProps {
+  isFirst: boolean
+  isLast: boolean
+  numPages: number
+  currentPage: number
+  blogSlug: string
+  prevPage: string
+  nextPage: string
+}
+
+const Pagination = (props: PaginationProps) => (
   <div className="pagination">
     <ul>
       {!props.isFirst && (
@@ -72,44 +84,49 @@ const Pagination = props => (
     </ul>
   </div>
 )
-class BlogIndex extends React.Component<PageProps<any, any>, {}> {
-  render() {
-    const { data } = this.props
-    const { currentPage, numPages } = this.props.pageContext
-    const blogSlug = "/blog/"
-    const isFirst = currentPage === 1
-    const isLast = currentPage === numPages
-    const prevPage =
-      currentPage - 1 === 1 ? blogSlug : blogSlug + (currentPage - 1).toString()
-    const nextPage = blogSlug + (currentPage + 1).toString()
 
-    const posts = data.allMarkdownRemark.edges
-      .filter(edge => !!edge.node.frontmatter.date)
-      .map(edge => <PostCard key={edge.node.id} data={edge.node} />)
-    let props = {
-      isFirst,
-      prevPage,
-      numPages,
-      blogSlug,
-      currentPage,
-      isLast,
-      nextPage,
-    }
+const BlogListPageTemplate = ({
+  data,
+  pageContext,
+}: PageProps<
+  GatsbyTypes.BlogListPageQuery,
+  BlogListPageTemplateContext
+>): JSX.Element => {
+  const { currentPage, numPages } = pageContext
+  const blogSlug = "/blog/"
+  const isFirst = currentPage === 1
+  const isLast = currentPage === numPages
+  const prevPage =
+    currentPage - 1 === 1 ? blogSlug : blogSlug + (currentPage - 1).toString()
+  const nextPage = blogSlug + (currentPage + 1).toString()
 
-    return (
-      <Layout className="blog-page">
-        <SEO
-          title={"Blog — Page " + currentPage + " of " + numPages}
-          description={
-            "Stackrole base blog page " + currentPage + " of " + numPages
-          }
-        />
-        <h1>Blog</h1>
-        <div className="grids col-1 sm-2 lg-3">{posts}</div>
-        <Pagination {...props} />
-      </Layout>
-    )
-  }
+  const posts = data.allMarkdownRemark.edges
+    .filter(edge => !!edge.node.frontmatter?.date)
+    .map(edge => <PostCard key={edge.node.id} data={edge.node} />)
+
+  return (
+    <Layout className="blog-page">
+      <SEO
+        title={"Blog — Page " + currentPage + " of " + numPages}
+        description={
+          "Stackrole base blog page " + currentPage + " of " + numPages
+        }
+      />
+      <h1>Blog</h1>
+      <div className="grids col-1 sm-2 lg-3">{posts}</div>
+      <Pagination
+        {...{
+          isFirst,
+          prevPage,
+          numPages,
+          blogSlug,
+          currentPage,
+          isLast,
+          nextPage,
+        }}
+      />
+    </Layout>
+  )
 }
 
-export default BlogIndex
+export default BlogListPageTemplate

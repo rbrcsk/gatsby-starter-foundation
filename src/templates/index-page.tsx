@@ -1,5 +1,5 @@
 import React from "react"
-import { graphql, Link } from "gatsby"
+import { graphql, Link, PageProps } from "gatsby"
 import Img from "gatsby-image"
 import { RiArrowRightSLine } from "react-icons/ri"
 
@@ -8,7 +8,7 @@ import BlogListHome from "../components/blog-list-home"
 import SEO from "../components/seo"
 
 export const pageQuery = graphql`
-  query HomeQuery($id: String!) {
+  query IndexPageTemplate($id: String!) {
     markdownRemark(id: { eq: $id }) {
       id
       html
@@ -39,39 +39,43 @@ export const pageQuery = graphql`
   }
 `
 
-const HomePage = ({ data }) => {
+const IndexPageTemplate = ({
+  data,
+}: PageProps<GatsbyTypes.IndexPageTemplateQuery>): JSX.Element | null => {
   const { markdownRemark } = data // data.markdownRemark holds your post data
-  const { frontmatter, html } = markdownRemark
-  const Image = frontmatter.featuredImage
-    ? frontmatter.featuredImage.childImageSharp.fluid
-    : ""
+  const { frontmatter, html } = markdownRemark ?? {}
+
+  if (!frontmatter || !markdownRemark) {
+    return null
+  }
+
+  const Image = frontmatter?.featuredImage?.childImageSharp?.fluid
+
   return (
     <Layout>
       <SEO />
       <div className="home-banner grids col-1 sm-2">
         <div>
-          <h1 className="title">{frontmatter.title}</h1>
-          <p className="tagline">{frontmatter.tagline}</p>
+          <h1 className="title">{frontmatter?.title}</h1>
+          <p className="tagline">{frontmatter?.tagline}</p>
           <div
             className="description"
-            dangerouslySetInnerHTML={{ __html: html }}
+            dangerouslySetInnerHTML={{ __html: html ?? "" }}
           />
-          <Link to={frontmatter.cta.ctaLink} className="button">
-            {frontmatter.cta.ctaText}
+          <Link to={frontmatter?.cta?.ctaLink ?? "#"} className="button">
+            {frontmatter?.cta?.ctaText}
             <span className="icon -right">
               <RiArrowRightSLine />
             </span>
           </Link>
         </div>
         <div>
-          {Image ? (
+          {Image && (
             <Img
               fluid={Image}
-              alt={frontmatter.title + " - Featured image"}
+              alt={frontmatter?.title + " - Featured image"}
               className="featured-image"
             />
-          ) : (
-            ""
           )}
         </div>
       </div>
@@ -80,4 +84,4 @@ const HomePage = ({ data }) => {
   )
 }
 
-export default HomePage
+export default IndexPageTemplate

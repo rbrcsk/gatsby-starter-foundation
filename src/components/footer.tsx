@@ -2,7 +2,7 @@ import React from "react"
 import { Link } from "gatsby"
 import { RiHeart2Line } from "react-icons/ri"
 
-const Footer = () => (
+const Footer = (): JSX.Element => (
   <footer className="site-footer">
     <div className="container">
       <p>

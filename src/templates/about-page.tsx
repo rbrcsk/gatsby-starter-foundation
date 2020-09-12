@@ -1,11 +1,11 @@
 import React from "react"
-import { graphql } from "gatsby"
+import { graphql, PageProps } from "gatsby"
 
 import Layout from "../components/layout"
 import SEO from "../components/seo"
 
 export const pageQuery = graphql`
-  query AboutQuery($id: String!) {
+  query AboutPageTemplate($id: String!) {
     markdownRemark(id: { eq: $id }) {
       id
       html
@@ -16,9 +16,16 @@ export const pageQuery = graphql`
     }
   }
 `
-const AboutPage = ({ data }) => {
+
+const AboutPageTemplate = ({
+  data,
+}: PageProps<GatsbyTypes.AboutPageTemplateQuery>): JSX.Element | null => {
   const { markdownRemark } = data // data.markdownRemark holds your post data
-  const { frontmatter, html, excerpt } = markdownRemark
+  const { frontmatter, html, excerpt } = markdownRemark ?? {}
+
+  if (!frontmatter || !html || !excerpt) {
+    return null
+  }
 
   return (
     <Layout className="page">
@@ -31,4 +38,4 @@ const AboutPage = ({ data }) => {
   )
 }
 
-export default AboutPage
+export default AboutPageTemplate

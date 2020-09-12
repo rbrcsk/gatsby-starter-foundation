@@ -1,12 +1,19 @@
 import React from "react"
-import PropTypes from "prop-types"
 import { Helmet } from "react-helmet"
 import { useLocation } from "@reach/router"
 import { useStaticQuery, graphql } from "gatsby"
+import { FluidObject } from "gatsby-image"
 
-const SEO = ({ title, description, image, article }) => {
+interface SEOProps {
+  title?: string
+  description?: string
+  image?: FluidObject
+  article?: boolean
+}
+
+const SEO = ({ title, description, image, article }: SEOProps): JSX.Element => {
   const { pathname } = useLocation()
-  const { site } = useStaticQuery(query)
+  const { site } = useStaticQuery<GatsbyTypes.SEOQuery>(query)
 
   const {
     defaultTitle,
@@ -15,12 +22,12 @@ const SEO = ({ title, description, image, article }) => {
     siteUrl,
     defaultImage,
     twitterUsername,
-  } = site.siteMetadata
+  } = site?.siteMetadata ?? {}
 
   const seo = {
     title: title || defaultTitle,
     description: description || defaultDescription,
-    image: `${siteUrl}${image || defaultImage}`,
+    image: `${siteUrl}${image?.src || defaultImage}`,
     url: `${siteUrl}${pathname}`,
   }
 
@@ -35,7 +42,7 @@ const SEO = ({ title, description, image, article }) => {
 
       {seo.url && <meta property="og:url" content={seo.url} />}
 
-      {(article ? true : null) && <meta property="og:type" content="article" />}
+      {article && <meta property="og:type" content="article" />}
 
       {seo.title && <meta property="og:title" content={seo.title} />}
 
@@ -63,20 +70,6 @@ const SEO = ({ title, description, image, article }) => {
 }
 
 export default SEO
-
-SEO.propTypes = {
-  title: PropTypes.string,
-  description: PropTypes.string,
-  image: PropTypes.string,
-  article: PropTypes.bool,
-}
-
-SEO.defaultProps = {
-  title: null,
-  description: null,
-  image: null,
-  article: false,
-}
 
 const query = graphql`
   query SEO {

@@ -1,55 +1,86 @@
 import React from "react"
-import { Link, graphql } from "gatsby"
+import { Link, graphql, PageProps } from "gatsby"
 import Img from "gatsby-image"
 import { RiArrowRightLine, RiArrowLeftLine } from "react-icons/ri"
 
 import Layout from "../components/layout"
 import SEO from "../components/seo"
+import { BlogPostPageTemplateContext } from "../types"
 
-const Pagination = props => (
-  <div className="pagination -post">
-    <ul>
-      {props.previous && props.previous.frontmatter.template === "blog-post" && (
-        <li>
-          <Link to={props.previous.frontmatter.slug} rel="prev">
-            <p>
-              <span className="icon -left">
-                <RiArrowLeftLine />
-              </span>{" "}
-              Previous
-            </p>
-            <span className="page-title">
-              {props.previous.frontmatter.title}
+type PaginationProps = Pick<BlogPostPageTemplateContext, "previous" | "next">
+
+const Pagination = (props: PaginationProps) => {
+  let previousFragment: React.ReactNode
+  let nextFragment: React.ReactNode
+
+  if (
+    props.previous?.frontmatter?.template === "blog-post" &&
+    props.previous.frontmatter.slug !== undefined &&
+    props.previous.frontmatter.title !== undefined
+  ) {
+    previousFragment = (
+      <li>
+        <Link to={props.previous.frontmatter.slug} rel="prev">
+          <p>
+            <span className="icon -left">
+              <RiArrowLeftLine />
+            </span>{" "}
+            Previous
+          </p>
+          <span className="page-title">{props.previous.frontmatter.title}</span>
+        </Link>
+      </li>
+    )
+  }
+
+  if (
+    props.next?.frontmatter?.template === "blog-post" &&
+    props.next.frontmatter.slug !== undefined &&
+    props.next.frontmatter.title !== undefined
+  ) {
+    nextFragment = (
+      <li>
+        <Link to={props.next.frontmatter.slug} rel="next">
+          <p>
+            Next{" "}
+            <span className="icon -right">
+              <RiArrowRightLine />
             </span>
-          </Link>
-        </li>
-      )}
-      {props.next && props.next.frontmatter.template === "blog-post" && (
-        <li>
-          <Link to={props.next.frontmatter.slug} rel="next">
-            <p>
-              Next{" "}
-              <span className="icon -right">
-                <RiArrowRightLine />
-              </span>
-            </p>
-            <span className="page-title">{props.next.frontmatter.title}</span>
-          </Link>
-        </li>
-      )}
-    </ul>
-  </div>
-)
+          </p>
+          <span className="page-title">{props.next.frontmatter.title}</span>
+        </Link>
+      </li>
+    )
+  }
 
-const Post = ({ data, pageContext }) => {
+  return (
+    <div className="pagination -post">
+      <ul>
+        {previousFragment}
+        {nextFragment}
+      </ul>
+    </div>
+  )
+}
+
+const BlogPostPageTemplate = ({
+  data,
+  pageContext,
+}: PageProps<
+  GatsbyTypes.BlogPostPageTemplateQuery,
+  BlogPostPageTemplateContext
+>): JSX.Element | null => {
   const { markdownRemark } = data // data.markdownRemark holds your post data
-  const { frontmatter, html, excerpt } = markdownRemark
-  const Image = frontmatter.featuredImage
-    ? frontmatter.featuredImage.childImageSharp.fluid
-    : ""
+  const { frontmatter, html, excerpt } = markdownRemark ?? {}
+
+  if (!frontmatter || !html || !excerpt) {
+    return null
+  }
+
+  const Image = frontmatter.featuredImage?.childImageSharp?.fluid
   const { previous, next } = pageContext
 
-  let props = {
+  const props = {
     previous,
     next,
   }
@@ -70,7 +101,7 @@ const Post = ({ data, pageContext }) => {
             <h1>{frontmatter.title}</h1>
             <time>{frontmatter.date}</time>
           </section>
-          {Image ? (
+          {Image && (
             <Img
               fluid={Image}
               alt={frontmatter.title + " - Featured image"}
@@ -80,8 +111,6 @@ const Post = ({ data, pageContext }) => {
                 objectPosition: "50% 50%",
               }}
             />
-          ) : (
-            ""
           )}
         </header>
 
@@ -95,10 +124,10 @@ const Post = ({ data, pageContext }) => {
   )
 }
 
-export default Post
+export default BlogPostPageTemplate
 
 export const pageQuery = graphql`
-  query BlogPostQuery($id: String!) {
+  query BlogPostPageTemplate($id: String!) {
     markdownRemark(id: { eq: $id }) {
       id
       html

@@ -27,47 +27,35 @@ const ListLink = props => (
   </li>
 )
 
-interface NavigationState {
-  showMenu: boolean
-}
+const Navigation = (): JSX.Element => {
+  const [showMenu, setShowMenu] = React.useState(false)
 
-class Navigation extends React.Component<{}, NavigationState> {
-  constructor(props) {
-    super(props)
-    this.state = { showMenu: false }
+  const handleToggleClick = React.useCallback(() => {
+    setShowMenu(state => !state)
+  }, [setShowMenu])
 
-    this.handleToggleClick = this.handleToggleClick.bind(this)
-  }
-
-  handleToggleClick() {
-    this.setState(state => ({
-      showMenu: !state.showMenu,
-    }))
-  }
-
-  render() {
-    const listMenuItems = MenuItems.map((menuItem, index) => (
-      <ListLink key={index} to={menuItem.path}>
-        {menuItem.title}
-      </ListLink>
-    ))
-    return (
-      <nav className="site-navigation">
-        <button
-          onClick={this.handleToggleClick}
-          className={"menu-trigger" + (this.state.showMenu ? " is-active" : "")}
-        >
-          <div className="icon-menu-line">
-            <RiMenu3Line />
-          </div>
-          <div className="icon-menu-close">
-            <RiCloseLine />
-          </div>
-        </button>
-        <ul>{listMenuItems}</ul>
-      </nav>
-    )
-  }
+  return (
+    <nav className="site-navigation">
+      <button
+        onClick={handleToggleClick}
+        className={"menu-trigger" + (showMenu ? " is-active" : "")}
+      >
+        <div className="icon-menu-line">
+          <RiMenu3Line />
+        </div>
+        <div className="icon-menu-close">
+          <RiCloseLine />
+        </div>
+      </button>
+      <ul>
+        {MenuItems.map((menuItem, index) => (
+          <ListLink key={index} to={menuItem.path}>
+            {menuItem.title}
+          </ListLink>
+        ))}
+      </ul>
+    </nav>
+  )
 }
 
 export default Navigation

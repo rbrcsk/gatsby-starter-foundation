@@ -1,6 +1,6 @@
 import React from "react"
 
-const Header = ({ children }) => (
+const Header: React.FC = ({ children }) => (
   <header className="site-header">{children}</header>
 )
 

@@ -1,12 +1,12 @@
 import React from "react"
-import { graphql } from "gatsby"
+import { graphql, PageProps } from "gatsby"
 import { RiSendPlane2Line } from "react-icons/ri"
 
 import Layout from "../components/layout"
 import SEO from "../components/seo"
 
 export const pageQuery = graphql`
-  query ContactQuery($id: String!) {
+  query ContactPageTemplate($id: String!) {
     markdownRemark(id: { eq: $id }) {
       id
       html
@@ -23,21 +23,27 @@ export const pageQuery = graphql`
   }
 `
 
-const Contact = ({ data }) => {
+const ContactPageTemplate = ({
+  data,
+}: PageProps<GatsbyTypes.ContactPageTemplateQuery>): JSX.Element | null => {
   const { markdownRemark, site } = data // data.markdownRemark holds your post data
-  const { frontmatter, html } = markdownRemark
+  const { frontmatter, html } = markdownRemark ?? {}
+
+  if (!frontmatter || !markdownRemark) {
+    return null
+  }
 
   return (
     <Layout className="contact-page">
       <SEO
         title={frontmatter.title}
-        description={frontmatter.title + " " + site.siteMetadata.title}
+        description={frontmatter.title + " " + site?.siteMetadata?.title}
       />
       <div className="wrapper">
         <h1>{frontmatter.title}</h1>
         <div
           className="description"
-          dangerouslySetInnerHTML={{ __html: html }}
+          dangerouslySetInnerHTML={{ __html: html ?? "" }}
         />
         <form
           className="contact-form"
@@ -85,4 +91,4 @@ const Contact = ({ data }) => {
   )
 }
 
-export default Contact
+export default ContactPageTemplate

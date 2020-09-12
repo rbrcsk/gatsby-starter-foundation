@@ -1,1 +1,1 @@
-export * from "./gatsby-api/node"
+export * from "./src/gatsby-api/node"

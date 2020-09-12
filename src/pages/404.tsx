@@ -5,7 +5,7 @@ import { RiArrowLeftSLine, RiBugLine, RiSkullLine } from "react-icons/ri"
 import SEO from "../components/seo"
 import Layout from "../components/layout"
 
-const NotFound = () => (
+const NotFound = (): JSX.Element => (
   <Layout className="not-found-page">
     <SEO title="Page not found" />
     <div

@@ -10,22 +10,41 @@ const netlifyCmsPaths = {
   },
 }
 
-import settings from "../../src/util/site.json"
+import settings from "../../util/site.json"
 
 export const siteMetadata = settings.meta
 
-export const plugins = [
+import type { PluginOptions as TypegenPluginOptions } from "gatsby-plugin-typegen/types"
+
+type Plugin =
+  | string
+  | { resolve: string; options: Record<string, unknown> }
+  | { resolve: `gatsby-plugin-typegen`; options: TypegenPluginOptions }
+
+export const plugins: Plugin[] = [
+  {
+    resolve: `gatsby-plugin-typegen`,
+    options: {
+      outputPath: `src/__generated__/gatsby-types.d.ts`,
+      emitSchema: {
+        "src/__generated__/gatsby-introspection.json": true,
+      },
+      emitPluginDocuments: {
+        "src/__generated__/gatsby-plugin-documents.graphql": true,
+      },
+    },
+  },
   {
     resolve: `gatsby-source-filesystem`,
     options: {
-      path: `${__dirname}/../../static/assets/`,
+      path: `${__dirname}/../../../static/assets/`,
       name: `assets`,
     },
   },
   {
     resolve: `gatsby-source-filesystem`,
     options: {
-      path: `${__dirname}/../../src/content/`,
+      path: `${__dirname}/../../../src/content/`,
       name: `content`,
     },
   },

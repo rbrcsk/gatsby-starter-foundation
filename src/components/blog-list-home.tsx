@@ -73,7 +73,7 @@ const BlogListHome = (): JSX.Element => {
       </BlogPostCardCompositionWrapper>
       <LinkButton to="/blog">
         See more
-        <IconWrapper>
+        <IconWrapper right flex>
           <RiArrowRightSLine />
         </IconWrapper>
       </LinkButton>

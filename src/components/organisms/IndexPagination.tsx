@@ -29,8 +29,8 @@ export const IndexPagination = (props: PaginationProps): JSX.Element => (
         <li key={`pagination-number${i + 1}`}>
           <PaginationAtoms.Link
             to={`${props.blogSlug}${i === 0 ? "" : i + 1}`}
-            number
-            isActive={props.currentPage === i + 1}
+            $number
+            $isActive={props.currentPage === i + 1}
           >
             {i + 1}
           </PaginationAtoms.Link>

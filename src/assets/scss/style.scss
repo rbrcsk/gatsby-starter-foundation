@@ -2,12 +2,6 @@
 @import "defaults";
 @import "lib/css-grid-utility";
 
-// .primary-container {
-// 	display: grid;
-// 	grid-template-rows: 60px auto 60px;
-// 	min-height: 100vh;
-// }
-
 .post-card {
   padding: 16px;
   border: 1px solid rgba(0, 0, 0, 0.08);
@@ -60,68 +54,6 @@
 @media (max-width: $breakpoint-sm) {
   .post-card .featured-image {
     min-height: 300px;
-  }
-}
-
-// Buttons
-.button {
-  &.-outline {
-    color: var(--primary-color);
-    box-shadow: 0 0 1px rgba(0, 0, 0, 0.6);
-    background: #fff;
-    &:hover {
-      box-shadow: 0 0 1px rgba(0, 0, 0, 0.8);
-      background: #f2f2f2;
-    }
-  }
-  & + .button {
-    margin-left: 20px;
-  }
-  .icon {
-    &.-left {
-      margin-right: var(--margin);
-    }
-  }
-}
-
-.contact-form {
-  margin-top: 36px;
-  label {
-    color: var(--label-text);
-  }
-  input,
-  textarea {
-    width: 100%;
-    max-width: 100%;
-    margin: 8px 0 16px;
-    padding: 16px;
-    border: 6px solid #a4a89760;
-    border-radius: 12px;
-    appearance: none;
-    font-size: 18px;
-    font-weight: 600;
-    &:focus {
-      border-color: var(--input-focus-border);
-    }
-  }
-  textarea {
-    min-height: 200px;
-  }
-}
-
-.pagination {
-  &.-post {
-  }
-  @media (max-width: $breakpoint-md) {
-    &.-post ul {
-      a {
-        padding: 20px;
-        border: 1px solid rgba(0, 0, 0, 0.1);
-        display: block;
-        margin-bottom: 10px;
-        background: #fafafa;
-      }
-    }
   }
 }
 

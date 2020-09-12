@@ -94,7 +94,7 @@ const IndexPageTemplate = ({
                 />
                 <LinkButton to={frontmatter?.cta?.ctaLink ?? "#"}>
                   {frontmatter?.cta?.ctaText}
-                  <IconWrapper>
+                  <IconWrapper right flex>
                     <RiArrowRightSLine />
                   </IconWrapper>
                 </LinkButton>

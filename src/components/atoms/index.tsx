@@ -3,13 +3,17 @@ import GatsbyImage from "gatsby-image"
 import { RiHeart2Line } from "react-icons/ri"
 import styled from "styled-components"
 
-export const IconWrapper = styled.span<{ left?: boolean; right?: boolean }>`
-  display: inline-block;
+export const IconWrapper = styled.span<{
+  left?: boolean
+  right?: boolean
+  flex?: boolean
+}>`
+  display: ${({ flex }) => (flex ? "inline-flex" : "inline-block")};
   line-height: inherit;
   vertical-align: middle;
   align-items: center;
-  margin-left: ${({ left }) => left && "var(--margin)"};
-  margin-right: ${({ right }) => right && "var(--margin)"};
+  margin-right: ${({ left }) => left && "var(--margin)"};
+  margin-left: ${({ right }) => right && "var(--margin)"};
 `
 
 export const FeaturedImg = (styled(GatsbyImage)<{ article?: boolean }>`
@@ -34,34 +38,6 @@ export const SiteHeader = styled.div`
   position: relative;
   background: var(--header-bg);
   padding: 30px 20px;
-`
-
-export const LinkButton = styled(GatsbyLink)`
-  --padding: 20px;
-  --margin: 20px;
-  display: inline-flex;
-  align-items: center;
-  padding: var(--padding) calc(var(--padding) * 2);
-  background-color: var(--button-alternate-color);
-  color: var(--button-color);
-  border-radius: 12px;
-  text-decoration: none;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  border: none;
-  font-size: inherit;
-  line-height: 1;
-  transition: background 0.3s linear;
-
-  &:hover {
-    background-color: var(--button-color);
-    color: var(--button-alternate-color);
-  }
-
-  ${IconWrapper} {
-    display: inline-flex;
-  }
 `
 
 export const HomeBannerTitle = styled.h1`
@@ -109,4 +85,10 @@ export const Container = styled.div`
   padding: 0 20px;
 `
 
+export const TextAlign = styled.div<{ align: "left" | "center" | "right" }>`
+  text-align: ${({ align }) => align};
+`
+
 export * from "./pagination"
+export * from "./blog"
+export * from "./button"

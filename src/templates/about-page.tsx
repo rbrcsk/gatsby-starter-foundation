@@ -30,10 +30,8 @@ const AboutPageTemplate = ({
   return (
     <Layout page narrow>
       <SEO title={frontmatter.title} description={excerpt} />
-      <div className="wrapper">
-        <h1>{frontmatter.title}</h1>
-        <article dangerouslySetInnerHTML={{ __html: html }} />
-      </div>
+      <h1>{frontmatter.title}</h1>
+      <article dangerouslySetInnerHTML={{ __html: html }} />
     </Layout>
   )
 }

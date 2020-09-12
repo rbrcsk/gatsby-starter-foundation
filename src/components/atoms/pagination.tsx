@@ -2,19 +2,19 @@ import { Link as GatsbyLink } from "gatsby"
 import styled from "styled-components"
 
 const PaginationLink = styled(GatsbyLink)<{
-  isActive?: boolean
-  number?: boolean
+  $isActive?: boolean
+  $number?: boolean
 }>`
   display: inline-block;
   padding: 10px 20px;
   font-weight: bold;
   line-height: 1;
 
-  color: ${({ isActive }) => isActive && "var(--header-bg)"};
-  pointer-events: ${({ isActive }) => isActive && "none"};
+  color: ${({ $isActive }) => $isActive && "var(--header-bg)"};
+  pointer-events: ${({ $isActive }) => $isActive && "none"};
 
   @media (max-width: 768px) {
-    display: ${({ number }) => number && "none"};
+    display: ${({ $number }) => $number && "none"};
   }
 `
 

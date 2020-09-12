@@ -5,7 +5,8 @@ import Layout from "../components/layout"
 import PostCard from "../components/post-card"
 import SEO from "../components/seo"
 import { BlogListPageTemplateContext } from "../types"
-import { IndexPagination } from "../components/organisms/IndexPagination"
+import { IndexPagination } from "../components/organisms"
+import { Composition } from "atomic-layout"
 
 export const blogListQuery = graphql`
   query BlogListPage($skip: Int!, $limit: Int!) {
@@ -53,10 +54,6 @@ const BlogListPageTemplate = ({
     currentPage - 1 === 1 ? blogSlug : blogSlug + (currentPage - 1).toString()
   const nextPage = blogSlug + (currentPage + 1).toString()
 
-  const posts = data.allMarkdownRemark.edges
-    .filter(edge => !!edge.node.frontmatter?.date)
-    .map(edge => <PostCard key={edge.node.id} data={edge.node} />)
-
   return (
     <Layout page>
       <SEO
@@ -66,7 +63,18 @@ const BlogListPageTemplate = ({
         }
       />
       <h1>Blog</h1>
-      <div className="grids col-1 sm-2 lg-3">{posts}</div>
+      <Composition
+        templateCols="repeat(1, 1fr)"
+        templateColsSm="repeat(2, 1fr)"
+        templateColsLg="repeat(3, 1fr)"
+        gap={30}
+      >
+        {data.allMarkdownRemark.edges
+          .filter(edge => !!edge.node.frontmatter?.date)
+          .map(edge => (
+            <PostCard key={edge.node.id} data={edge.node} />
+          ))}
+      </Composition>
       <IndexPagination
         {...{
           isFirst,

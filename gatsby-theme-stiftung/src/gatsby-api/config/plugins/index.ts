@@ -7,8 +7,9 @@ import { stylePlugins } from "./style"
 
 export const plugins: GatsbyPlugin[] = [
   ...stylePlugins,
-  ...linterPlugins,
   ...sourcePlugins,
   ...transformerPlugins,
   ...miscPlugins,
 ]
+
+export { linterPlugins }

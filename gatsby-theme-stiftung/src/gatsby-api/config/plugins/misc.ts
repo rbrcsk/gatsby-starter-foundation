@@ -1,5 +1,3 @@
-import settings from "../settings"
-
 const typeGen = {
   resolve: `gatsby-plugin-typegen`,
   options: {
@@ -15,12 +13,6 @@ const typeGen = {
 
 const reactHelmet = `gatsby-plugin-react-helmet`
 const netlifyCMS = `gatsby-plugin-netlify-cms`
-const googleAnalytics = {
-  resolve: `gatsby-plugin-google-analytics`,
-  options: {
-    trackingId: settings.ga,
-  },
-}
 const siteMap = `gatsby-plugin-advanced-sitemap`
 const manifest = {
   resolve: `gatsby-plugin-manifest`,
@@ -40,7 +32,6 @@ export const miscPlugins = [
   typeGen,
   reactHelmet,
   netlifyCMS,
-  googleAnalytics,
   siteMap,
   manifest,
   offline,

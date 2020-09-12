@@ -6,5 +6,14 @@
 
 import settings from "./settings"
 
-export const siteMetadata = settings.meta
-export * from "./plugins"
+const siteMetadata = settings.meta
+import { plugins, linterPlugins } from "./plugins"
+
+const config = options => {
+  return {
+    siteMetadata,
+    plugins: [...plugins],
+  }
+}
+
+export default config

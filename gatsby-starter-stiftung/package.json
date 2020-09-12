@@ -1,0 +1,28 @@
+{
+  "name": "@rbrcsk/gatsby-starter-stiftung",
+  "description": "A starter to launch your blazing fast personal website and a blog, Built with Typescript, Gatsby and Netlify CMS. Made with ❤ by Richard, badsed on Stackrole's gatsby-starter-foundation",
+  "version": "0.0.1",
+  "author": "Richard Borcsik <open-source@richardb.me>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rbrcsk/gatsby-starter-ts-foundation.git"
+  },
+  "bugs": {
+    "url": "https://github.com/rbrcsk/gatsby-starter-ts-foundation/issues"
+  },
+  "scripts": {
+    "build": "GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES=true gatsby build --log-pages",
+    "develop": "gatsby develop"
+  },
+  "dependencies": {
+    "gatsby": "2.24.8",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "@rbrcsk/gatsby-theme-stiftung": "^0.0.1"
+  },
+  "devDependencies": {
+    "ts-node": "^9.0.0",
+    "typescript": "^4.0.2"
+  }
+}

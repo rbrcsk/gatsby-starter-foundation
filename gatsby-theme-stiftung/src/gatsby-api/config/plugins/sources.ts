@@ -1,7 +1,9 @@
+import path from "path"
+
 const staticAssetsSource = {
   resolve: `gatsby-source-filesystem`,
   options: {
-    path: `${__dirname}/../../../../static/assets/`,
+    path: path.resolve(`static/assets/`),
     name: `assets`,
   },
 }
@@ -9,7 +11,7 @@ const staticAssetsSource = {
 const contentSource = {
   resolve: `gatsby-source-filesystem`,
   options: {
-    path: `${__dirname}/../../../../content/`,
+    path: path.resolve(`content/`),
     name: `content`,
   },
 }

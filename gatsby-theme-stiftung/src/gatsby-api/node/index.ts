@@ -1,4 +1,3 @@
-import path from "path"
 import { createFilePath } from "gatsby-source-filesystem"
 import type { GatsbyNode } from "gatsby"
 import type { GatsbyNodeBlogPostListQuery } from "../../types"
@@ -12,8 +11,8 @@ export const createPages: GatsbyNode["createPages"] = async ({
 }) => {
   const { createPage } = actions
 
-  //const blogPost = path.resolve(`./src/templates/blog-post.tsx`)
-  const blogList = path.resolve(`./src/templates/blog-list.tsx`)
+  //const blogPost = require.resolve(`./src/templates/blog-post.tsx`)
+  const blogList = require.resolve(`../../templates/blog-list.tsx`)
 
   // If you update this, make sure to update src/components/dummy-blog-list.tsx also!
   const result = await graphql<GatsbyNodeBlogPostListQuery>(`
@@ -55,8 +54,8 @@ export const createPages: GatsbyNode["createPages"] = async ({
 
     createPage({
       path: post.node.frontmatter.slug,
-      component: path.resolve(
-        `src/templates/${String(post.node.frontmatter.template)}.tsx`
+      component: require.resolve(
+        `../../templates/${String(post.node.frontmatter.template)}.tsx`
       ),
       // additional data can be passed via context
       context: {

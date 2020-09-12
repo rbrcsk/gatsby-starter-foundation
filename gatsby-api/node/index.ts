@@ -1,7 +1,12 @@
-const path = require("path")
-const { createFilePath } = require(`gatsby-source-filesystem`)
+import path from "path"
+import { createFilePath } from "gatsby-source-filesystem"
+import type { GatsbyNode } from "gatsby"
 
-exports.createPages = async ({ actions, graphql, reporter }) => {
+export const createPages: GatsbyNode["createPages"] = async ({
+  actions,
+  graphql,
+  reporter,
+}) => {
   const { createPage } = actions
 
   //const blogPost = path.resolve(`./src/templates/blog-post.tsx`)
@@ -31,7 +36,8 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
   }
 
   // Create markdown pages
-  const posts = result.data.allMarkdownRemark.edges
+  // TODO: correctly type this
+  const posts = (result.data as any).allMarkdownRemark.edges
   let blogPostsCount = 0
 
   posts.forEach((post, index) => {
@@ -76,7 +82,11 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
   })
 }
 
-exports.onCreateNode = ({ node, getNode, actions }) => {
+export const onCreateNode: GatsbyNode["onCreateNode"] = ({
+  node,
+  getNode,
+  actions,
+}) => {
   const { createNodeField } = actions
   if (node.internal.type === `MarkdownRemark`) {
     const slug = createFilePath({ node, getNode, basePath: `pages` })

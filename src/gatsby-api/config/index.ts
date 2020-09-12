@@ -34,6 +34,13 @@ export const plugins: Plugin[] = [
       },
     },
   },
+
+  {
+    resolve: "gatsby-plugin-styled-components",
+    options: {
+      namespace: "foundation",
+    },
+  },
   {
     resolve: `gatsby-source-filesystem`,
     options: {
@@ -85,7 +92,6 @@ export const plugins: Plugin[] = [
       ],
     },
   },
-  `gatsby-plugin-sass`,
   `gatsby-plugin-react-helmet`,
   `gatsby-plugin-netlify-cms`,
   {

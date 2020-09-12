@@ -1,6 +1,6 @@
 ## Foundation TS
 
-A Typescript conversion of [Stackrole's Foundation][original], an awesome Gatsby starter.
+A gatsby theme for performan personal website, based on [Stackrole's Foundation][original] Gatsby starter.
 
 ### Changes from the original version
 
@@ -8,8 +8,6 @@ A Typescript conversion of [Stackrole's Foundation][original], an awesome Gatsby
 - [x] Styled components instead of SCSS
       The styles match the original version as much as possible. If there's a difference feel free to file a bug!
 - [ ] Converted to gatsby theme instead of starter - Coming soon
-
-A starter to launch your blazing fast personal website and a blog, Built with [Gatsby][gatsby] and [Netlify CMS][netlifycms]. [Click here to check out a live preview!][live-preview]
 
 [![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/rbrcsk/gatsby-starter-ts-foundation)
 

@@ -11,3 +11,10 @@ export interface BlogPostPageTemplateContext {
 }
 
 export type GatsbyNodeBlogPostListQuery = GatsbyTypes.GatsbyNodeBlogPostListQuery
+
+import type { PluginOptions as TypegenPluginOptions } from "gatsby-plugin-typegen/types"
+
+export type GatsbyPlugin =
+  | string
+  | { resolve: string; options: Record<string, unknown> }
+  | { resolve: `gatsby-plugin-typegen`; options: TypegenPluginOptions }

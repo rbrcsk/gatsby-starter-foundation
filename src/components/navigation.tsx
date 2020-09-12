@@ -27,7 +27,11 @@ const ListLink = props => (
   </li>
 )
 
-class Navigation extends React.Component {
+interface NavigationState {
+  showMenu: boolean
+}
+
+class Navigation extends React.Component<{}, NavigationState> {
   constructor(props) {
     super(props)
     this.state = { showMenu: false }

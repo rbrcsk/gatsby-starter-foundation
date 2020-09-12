@@ -1,5 +1,5 @@
 import React from "react"
-import { Link, graphql } from "gatsby"
+import { Link, graphql, PageProps } from "gatsby"
 import { RiArrowRightLine, RiArrowLeftLine } from "react-icons/ri"
 
 import Layout from "../components/layout"
@@ -72,7 +72,7 @@ const Pagination = props => (
     </ul>
   </div>
 )
-class BlogIndex extends React.Component {
+class BlogIndex extends React.Component<PageProps<any, any>, {}> {
   render() {
     const { data } = this.props
     const { currentPage, numPages } = this.props.pageContext

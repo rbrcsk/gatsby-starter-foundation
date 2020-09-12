@@ -18,7 +18,11 @@ const query = graphql`
   }
 `
 
-const Layout = ({ children, className }) => {
+interface LayoutProps {
+  className?: string
+}
+
+const Layout: React.FC<LayoutProps> = ({ children, className }) => {
   const { site } = useStaticQuery(query)
   const { siteTitle } = site.siteMetadata
 

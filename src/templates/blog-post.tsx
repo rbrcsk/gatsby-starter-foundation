@@ -73,10 +73,12 @@ const Post = ({ data, pageContext }) => {
           {Image ? (
             <Img
               fluid={Image}
-              objectFit="cover"
-              objectPosition="50% 50%"
               alt={frontmatter.title + " - Featured image"}
               className="featured-image"
+              imgStyle={{
+                objectFit: "cover",
+                objectPosition: "50% 50%",
+              }}
             />
           ) : (
             ""

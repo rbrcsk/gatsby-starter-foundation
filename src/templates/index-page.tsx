@@ -104,7 +104,6 @@ const IndexPageTemplate = ({
                   <FeaturedImg
                     fluid={Image}
                     alt={frontmatter?.title + " - Featured image"}
-                    className="featured-image"
                   />
                 )}
               </Areas.Photo>

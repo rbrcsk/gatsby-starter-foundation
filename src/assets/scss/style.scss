@@ -2,61 +2,6 @@
 @import "defaults";
 @import "lib/css-grid-utility";
 
-.post-card {
-  padding: 16px;
-  border: 1px solid rgba(0, 0, 0, 0.08);
-  background-color: #fff;
-  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.05);
-  border-radius: 12px;
-  transition: box-shadow 0.3s linear;
-  .featured-image {
-    border-radius: 12px;
-    img {
-      display: block;
-      margin: 0;
-    }
-  }
-  .title {
-    margin: 0 0 3px;
-    font-size: 20px;
-    font-weight: 600;
-    a {
-      color: var(--post-link-color);
-    }
-  }
-  &:hover {
-    border: 1px solid rgba(0, 0, 0, 0.12);
-    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.1);
-    .title {
-      color: var(--button-alternate-color);
-    }
-  }
-  .meta {
-    margin: 0;
-    font-size: 12px;
-    color: rgba(0, 0, 0, 0.5);
-  }
-  .post-content {
-    margin-top: 16px;
-  }
-  @media (max-width: $breakpoint-md) {
-    padding: 0;
-    .post-content {
-      padding: 16px;
-      margin-top: 0;
-    }
-    .featured-image {
-      border-radius: 12px 12px 0 0;
-    }
-  }
-}
-
-@media (max-width: $breakpoint-sm) {
-  .post-card .featured-image {
-    min-height: 300px;
-  }
-}
-
 @import "utility";
 
 // Libraries

@@ -1,7 +1,7 @@
 {
-  "name": "@rbrcsk/gatsby-starter-ts-foundation",
+  "name": "@rbrcsk/gatsby-theme-stiftung",
   "description": "A starter to launch your blazing fast personal website and a blog, Built with Typescript, Gatsby and Netlify CMS. Made with ❤ by Richard, badsed on Stackrole's gatsby-starter-foundation",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "author": "Richard Borcsik <open-source@richardb.me>",
   "license": "MIT",
   "repository": {
